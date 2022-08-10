@@ -1,4 +1,4 @@
-module github.com/dmigra0/pgx
+module github.com/jackc/pgx/dm
 
 go 1.13
 
