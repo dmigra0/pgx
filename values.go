@@ -158,6 +158,7 @@ func encodePreparedStatementArgument(ci *pgtype.ConnInfo, buf []byte, oid uint32
 			buf = argBuf
 			pgio.SetInt32(buf[sp:], int32(len(buf[sp:])-4))
 		}
+		fmt.Printf("This is a string: buf: %v argBuf: %v", buf, argBuf)
 		return buf, nil
 	case pgtype.TextEncoder:
 		sp := len(buf)
@@ -170,12 +171,16 @@ func encodePreparedStatementArgument(ci *pgtype.ConnInfo, buf []byte, oid uint32
 			buf = argBuf
 			pgio.SetInt32(buf[sp:], int32(len(buf[sp:])-4))
 		}
+		fmt.Printf("This is a string: buf: %v argBuf: %v", buf, argBuf)
 		return buf, nil
 	case string:
 		buf = pgio.AppendInt32(buf, int32(len(arg)))
 		buf = append(buf, arg...)
+		fmt.Printf("This is a string: buf: %v arg: %v", buf, arg)
 		return buf, nil
 	}
+
+	fmt.Printf("This is something else: %v", arg)
 
 	refVal := reflect.ValueOf(arg)
 
