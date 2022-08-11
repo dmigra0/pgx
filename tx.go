@@ -155,6 +155,7 @@ type Tx interface {
 	Rollback(ctx context.Context) error
 
 	CopyFrom(ctx context.Context, tableName Identifier, columnNames []string, rowSrc CopyFromSource) (int64, error)
+	CopyFromText(ctx context.Context, tableName Identifier, columnNames []string, rowSrc CopyFromSource) (int64, error)
 	SendBatch(ctx context.Context, b *Batch) BatchResults
 	LargeObjects() LargeObjects
 
