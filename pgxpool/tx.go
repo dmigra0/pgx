@@ -50,6 +50,10 @@ func (tx *Tx) CopyFrom(ctx context.Context, tableName pgx.Identifier, columnName
 	return tx.t.CopyFrom(ctx, tableName, columnNames, rowSrc)
 }
 
+func (tx *Tx) CopyFromText(ctx context.Context, tableName pgx.Identifier, columnNames []string, rowSrc pgx.CopyFromSource) (int64, error) {
+	return tx.t.CopyFromText(ctx, tableName, columnNames, rowSrc)
+}
+
 func (tx *Tx) SendBatch(ctx context.Context, b *pgx.Batch) pgx.BatchResults {
 	return tx.t.SendBatch(ctx, b)
 }
