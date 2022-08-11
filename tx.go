@@ -312,6 +312,15 @@ func (tx *dbTx) CopyFrom(ctx context.Context, tableName Identifier, columnNames 
 	return tx.conn.CopyFrom(ctx, tableName, columnNames, rowSrc)
 }
 
+// CopyFrom delegates to the underlying *Conn
+func (tx *dbTx) CopyFromText(ctx context.Context, tableName Identifier, columnNames []string, rowSrc CopyFromSource) (int64, error) {
+	if tx.closed {
+		return 0, ErrTxClosed
+	}
+
+	return tx.conn.CopyFromText(ctx, tableName, columnNames, rowSrc)
+}
+
 // SendBatch delegates to the underlying *Conn
 func (tx *dbTx) SendBatch(ctx context.Context, b *Batch) BatchResults {
 	if tx.closed {
@@ -429,6 +438,15 @@ func (sp *dbSimulatedNestedTx) CopyFrom(ctx context.Context, tableName Identifie
 	}
 
 	return sp.tx.CopyFrom(ctx, tableName, columnNames, rowSrc)
+}
+
+// CopyFrom delegates to the underlying *Conn
+func (sp *dbSimulatedNestedTx) CopyFromText(ctx context.Context, tableName Identifier, columnNames []string, rowSrc CopyFromSource) (int64, error) {
+	if sp.closed {
+		return 0, ErrTxClosed
+	}
+
+	return sp.tx.CopyFromText(ctx, tableName, columnNames, rowSrc)
 }
 
 // SendBatch delegates to the underlying *Conn
